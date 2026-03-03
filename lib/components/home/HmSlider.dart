@@ -1,7 +1,10 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:hm_shop/viewmodels/home.dart';
 
 class HmSlider extends StatefulWidget {
-  HmSlider({Key? key}) : super(key: key);
+  final List<BannerItem> bannerList;
+  HmSlider({Key? key, required this.bannerList}) : super(key: key);
 
   @override
   _HmSliderState createState() => _HmSliderState();
@@ -10,20 +13,24 @@ class HmSlider extends StatefulWidget {
 class _HmSliderState extends State<HmSlider> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      height: 300,
-      child: PageView.builder(
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return Container(
-            alignment: Alignment.center,
-            child: Text(
-              "轮播图${index + 1}",
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-          );
-        },
+    return Stack(children: [_getSlider()]);
+  }
+
+  Widget _getSlider() {
+    // 在Flutter中获取屏幕宽度的方法
+    final double screenWidth = MediaQuery.of(context).size.width; // 屏幕宽度
+    return CarouselSlider(
+      items: List.generate(widget.bannerList.length, (index) {
+        return Image.network(
+          widget.bannerList[index].imgUrl,
+          fit: BoxFit.cover,
+          width: screenWidth,
+        );
+      }),
+      options: CarouselOptions(
+        viewportFraction: 1,
+        autoPlay: true,
+        autoPlayInterval: Duration(seconds: 5),
       ),
     );
   }
