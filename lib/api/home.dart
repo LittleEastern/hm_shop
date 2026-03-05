@@ -17,3 +17,11 @@ Future<List<CategoryItem>> getCategoryListAPI() async {
     return CategoryItem.fromJSON(item as Map<String, dynamic>);
   }).toList();
 }
+
+// 特惠推荐
+Future<SpecialRecommendResult> getSpecialRecommendListAPI() async {
+  // 返回请求
+  return SpecialRecommendResult.fromJSON(
+    await dioRequest.get(HttpConstants.PRODUCT_LIST),
+  );
+}
