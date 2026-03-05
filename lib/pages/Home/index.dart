@@ -22,6 +22,18 @@ class _HomeViewState extends State<HomeView> {
     title: "",
     subTypes: [],
   );
+  // 爆款推荐
+  SpecialRecommendResult _inVogueResult = SpecialRecommendResult(
+    id: "",
+    title: "",
+    subTypes: [],
+  );
+  // 一站买全
+  SpecialRecommendResult _oneStopResult = SpecialRecommendResult(
+    id: "",
+    title: "",
+    subTypes: [],
+  );
 
   @override
   void initState() {
@@ -29,6 +41,8 @@ class _HomeViewState extends State<HomeView> {
     _getBannerList();
     _getCategoryList();
     _getSpecialRecommendList();
+    _getInVogueList();
+    _getOneStopList();
   }
 
   @override
@@ -57,9 +71,9 @@ class _HomeViewState extends State<HomeView> {
           child: Flex(
             direction: Axis.horizontal,
             children: [
-              Expanded(child: HmHot()),
+              Expanded(child: HmHot(result: _inVogueResult, type: "hot")),
               SizedBox(width: 10),
-              Expanded(child: HmHot()),
+              Expanded(child: HmHot(result: _oneStopResult, type: "step")),
             ],
           ),
         ),
@@ -83,6 +97,18 @@ class _HomeViewState extends State<HomeView> {
   // 特惠推荐
   void _getSpecialRecommendList() async {
     _specialRecommendResult = await getSpecialRecommendListAPI();
+    setState(() {});
+  }
+
+  // 爆款推荐
+  void _getInVogueList() async {
+    _inVogueResult = await getInVogueListAPI();
+    setState(() {});
+  }
+
+  // 一站买全
+  void _getOneStopList() async {
+    _oneStopResult = await getOneStopListAPI();
     setState(() {});
   }
 }
