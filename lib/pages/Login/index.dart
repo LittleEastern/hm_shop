@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:hm_shop/api/user.dart';
 import 'package:hm_shop/utils/ToastUtils.dart';
 
 class LoginPage extends StatefulWidget {
@@ -17,11 +19,11 @@ class _LoginPageState extends State<LoginPage> {
     return TextFormField(
       controller: _phoneController,
       validator: (value) {
-        if(value == null || value.isEmpty) {
+        if (value == null || value.isEmpty) {
           return "手机号不能为空";
         }
         // 校验手机号格式
-        if(!RegExp(r"^1[3-9]\d{9}$").hasMatch(value)) {
+        if (!RegExp(r"^1[3-9]\d{9}$").hasMatch(value)) {
           return "手机号格式不正确";
         }
       },
@@ -44,11 +46,11 @@ class _LoginPageState extends State<LoginPage> {
       controller: _codeController,
       obscureText: true,
       validator: (value) {
-        if(value == null || value.isEmpty) {
+        if (value == null || value.isEmpty) {
           return "密码不能为空";
         }
         // 密码的校验 6-16位的数字 字母或下划线
-        if(!RegExp(r"^[a-zA-Z0-9_]{6,16}$").hasMatch(value)) {
+        if (!RegExp(r"^[a-zA-Z0-9_]{6,16}$").hasMatch(value)) {
           return "请输入6-16位的字母数字或者下划线";
         }
       },
@@ -73,10 +75,11 @@ class _LoginPageState extends State<LoginPage> {
       child: ElevatedButton(
         onPressed: () {
           // 登录逻辑
-          if(_key.currentState!.validate()) {
+          if (_key.currentState!.validate()) {
             // 进行勾选框的判断
-            if(_isChecked) {
+            if (_isChecked) {
               // 校验通过
+              _login();
             } else {
               // 提示请勾选用户协议
               ToastUtils.showToast(context, "请勾选用户协议");
@@ -148,6 +151,22 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ],
     );
+  }
+
+  _login() async {
+    // 调用登录接口
+    try {
+      final res = await loginAPI({
+        "account": _phoneController.text,
+        "password": _codeController.text,
+      });
+      // 此时一定登录成功
+      // http状态码 2xx 业务状态码 业务执行成功 1
+      ToastUtils.showToast(context, "登录成功");
+      Navigator.pop(context);
+    } catch (e) {
+      ToastUtils.showToast(context, (e as DioException).message ?? "");
+    }
   }
 
   @override

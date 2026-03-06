@@ -21,6 +21,11 @@ class DioRequest {
     return _handleResponse(_dio.get(url, queryParameters: params));
   }
 
+  // 定义post接口
+  Future<dynamic> post(String url, {Map<String, dynamic>? data}) {
+    return _handleResponse(_dio.post(url, data: data));
+  }
+
   // dio请求工具发出请求 返回的数据 Response<dynamic>.data
   // 把所有的接口的data解放出来 拿到真正的数据 要判断业务状态码是不是等于1
   // 进一步处理返回结果的函数
@@ -33,9 +38,14 @@ class DioRequest {
         return data["result"]; // 只要result结果
       }
       // 抛出异常
-      throw Exception(data["msg"] ?? "加载数据异常");
+      //throw Exception(data["msg"] ?? "加载数据异常");
+      throw DioException(
+        requestOptions: res.requestOptions,
+        message: data["msg"] ?? "加载数据失败",
+      );
     } catch (e) {
-      throw Exception(e);
+      //throw Exception(e);
+      rethrow; // 不改变原来抛出的异常类型
     }
   }
 
@@ -55,7 +65,13 @@ class DioRequest {
           handler.reject(DioException(requestOptions: response.requestOptions));
         },
         onError: (error, handler) {
-          handler.reject(error);
+          //handler.reject(error);
+          handler.reject(
+            DioException(
+              requestOptions: error.requestOptions,
+              message: error.response?.data["msg"] ?? "",
+            ),
+          );
         },
       ),
     );
