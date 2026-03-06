@@ -31,12 +31,12 @@ class _HmCategoryState extends State<HmCategory> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.network(
-                  widget.categoryList[index].picture ?? "",
+                  widget.categoryList[index].picture,
                   width: 40,
                   height: 40,
                 ),
                 Text(
-                  widget.categoryList[index].name ?? "",
+                  widget.categoryList[index].name,
                   style: TextStyle(color: Colors.black),
                 ),
               ],

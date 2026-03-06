@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hm_shop/api/home.dart';
-import 'package:hm_shop/components/home/HmCategory.dart';
-import 'package:hm_shop/components/home/HmHot.dart';
-import 'package:hm_shop/components/home/HmMoreList.dart';
-import 'package:hm_shop/components/home/HmSlider.dart';
-import 'package:hm_shop/components/home/HmSuggestion.dart';
+import 'package:hm_shop/components/Home/HmCategory.dart';
+import 'package:hm_shop/components/Home/HmHot.dart';
+import 'package:hm_shop/components/Home/HmMoreList.dart';
+import 'package:hm_shop/components/Home/HmSlider.dart';
+import 'package:hm_shop/components/Home/HmSuggestion.dart';
 import 'package:hm_shop/utils/ToastUtils.dart';
 import 'package:hm_shop/viewmodels/home.dart';
 
