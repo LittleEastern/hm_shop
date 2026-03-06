@@ -36,6 +36,11 @@ class _HomeViewState extends State<HomeView> {
   );
   // 推荐列表
   List<GoodDetailItem> _recommendList = [];
+  // 滚动控制器
+  final ScrollController _controller = ScrollController();
+  bool _isLoading = false; // 当前正在加载状态
+  bool _hasMore = true; // 是否还有下一页
+  int _page = 1; // 页码
 
   @override
   void initState() {
@@ -45,12 +50,15 @@ class _HomeViewState extends State<HomeView> {
     _getSpecialRecommendList();
     _getInVogueList();
     _getOneStopList();
-    _getRecommendList();
+    _getRecommendList(_page);
+    _registerEvent();
   }
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(slivers: _getScrollChildren());
+    return CustomScrollView(
+      controller: _controller, // 绑定控制器
+      slivers: _getScrollChildren());
   }
 
   List<Widget> _getScrollChildren() {
@@ -116,8 +124,29 @@ class _HomeViewState extends State<HomeView> {
   }
 
    // 获取推荐列表
-  void _getRecommendList() async {
-    _recommendList = await getRecommendListAPI({"limit": 10});
+  void _getRecommendList(int page) async {
+    // 当已经有请求正在加载 或者已经没有下一页了 就放弃请求
+    if(_isLoading || !_hasMore) return;
+    _isLoading = true; // 占住位置
+    _recommendList = await getRecommendListAPI({"limit": _page * 10});
+    _isLoading = false; //松开位置
     setState(() {});
+    // 我要10条 你给10条 说明我要的你都给了 接着认为还有下一页
+    // 我要10条 你给9条 
+    if(_recommendList.length < _page * 10) {
+      _hasMore = false;
+      return;
+    }
+    _page++;
+  }
+
+  // 监听滚动到底部的事件
+  void _registerEvent() {
+    _controller.addListener(() {
+      if(_controller.position.pixels >= (_controller.position.maxScrollExtent - 50)) {
+        // 加载下一页数据
+        _getRecommendList(_page);
+      }
+    });
   }
 }
