@@ -22,7 +22,7 @@ class _MineViewState extends State<MineView> {
   bool _isLoading = false; // 是否有人正在加载
   bool _hasMore = true;
 
-  final Usercontroller _usercontroller = Get.put(Usercontroller());
+  final UserController _usercontroller = Get.find();
 
   Widget _buildHeader() {
     return Container(

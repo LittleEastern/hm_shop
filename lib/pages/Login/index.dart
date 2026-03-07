@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hm_shop/api/user.dart';
+import 'package:hm_shop/stores/TokenManager.dart';
 import 'package:hm_shop/stores/UserController.dart';
 import 'package:hm_shop/utils/ToastUtils.dart';
 
@@ -17,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _codeController = TextEditingController(); // 密码控制器
   final GlobalKey<FormState> _key = GlobalKey();
 
-  final Usercontroller _usercontroller = Get.find(); // 寻找对象
+  final UserController _usercontroller = Get.find(); // 寻找对象
 
   // 用户账号Widget
   Widget _buildPhoneTextField() {
@@ -168,6 +169,7 @@ class _LoginPageState extends State<LoginPage> {
       // 此时一定登录成功
       // http状态码 2xx 业务状态码 业务执行成功 1
       ToastUtils.showToast(context, "登录成功");
+      tokenmanager.setToken(res.token);
       _usercontroller.updateUserInfo(res);
       Navigator.pop(context);
     } catch (e) {
