@@ -1,7 +1,7 @@
 import 'package:hm_shop/constants/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Tokenmanager {
+class TokenManager {
   String _token = "";
 
   // 返回持久化对象的实例对象
@@ -33,4 +33,4 @@ class Tokenmanager {
   }
 }
 
-final Tokenmanager tokenmanager = Tokenmanager();
+final TokenManager tokenManager = TokenManager();

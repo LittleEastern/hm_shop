@@ -66,38 +66,38 @@ class _HmHotState extends State<HmHot> {
   List<Widget> _getChildrenList() {
     return List.generate(
       _items.length,
-      (index) => Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                _items[index].picture,  
-                width: 80,
-                height: 100,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Image.asset(
-                    "lib/assets/home_cmd_inner.png",
-                    width: 80,
-                    height: 100,
-                    fit: BoxFit.cover,
-                  );
-                },
+      (index) => Expanded(
+        child: Container(
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
+          child: Column(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.network(
+                  _items[index].picture,
+                  //width: 80,
+                  height: 100,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      "lib/assets/home_cmd_inner.png",
+                      //width: 80,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    );
+                  },
+                ),
               ),
-            ),
-            SizedBox(height: 5),
-            Text(
-              "￥${_items[index].price}",
-              style: TextStyle(
-                color: Color.fromARGB(255, 86, 24, 20),
-                fontSize: 12,
+              SizedBox(height: 5),
+              Text(
+                "￥${_items[index].price}",
+                style: TextStyle(
+                  color: Color.fromARGB(255, 86, 24, 20),
+                  fontSize: 12,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

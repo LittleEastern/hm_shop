@@ -53,7 +53,7 @@ class _MineViewState extends State<MineView> {
                             _usercontroller.updateUserInfo(
                               UserInfo.fromJSON({}),
                             );
-                            tokenmanager.removeToken();
+                            tokenManager.removeToken();
                             Navigator.pop(context);
                             setState(() {});
                           },

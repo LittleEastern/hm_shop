@@ -72,8 +72,8 @@ class _MainPageState extends State<MainPage> {
   }
 
   _initUser() async {
-    await tokenmanager.init(); // 初始化token
-    if(tokenmanager.getToken().isNotEmpty) {
+    await tokenManager.init(); // 初始化token
+    if(tokenManager.getToken().isNotEmpty) {
       // 如果token有值就获取用户信息
       _usercontroller.updateUserInfo(await getUserInfoAPI());
     }

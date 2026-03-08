@@ -56,9 +56,9 @@ class DioRequest {
       InterceptorsWrapper(
         onRequest: (request, handler) {
           // 注入token request headers Authorization = "Bearer token"
-          if (tokenmanager.getToken().isNotEmpty) {
+          if (tokenManager.getToken().isNotEmpty) {
             request.headers = {
-              "Authorization": "Bearer ${tokenmanager.getToken()}",
+              "Authorization": "Bearer ${tokenManager.getToken()}",
             };
           }
           handler.next(request);
